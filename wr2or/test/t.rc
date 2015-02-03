@@ -1,0 +1,22 @@
+/****************************************************************************
+
+
+t.rc
+
+produced by Borland Resource Workshop
+
+
+*****************************************************************************/
+
+
+DIALOG_1 DIALOG 6, 15, 207, 111
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "DIALOG_1"
+FONT 8, "MS Sans Serif"
+{
+ EDITTEXT 101, 9, 15, 49, 12
+ COMBOBOX 102, 66, 15, 49, 59, CBS_DROPDOWNLIST | WS_TABSTOP
+ COMBOBOX 103, 9, 31, 49, 33, CBS_DROPDOWNLIST | WS_TABSTOP
+}
+
+rcinclude mydlg.dlg

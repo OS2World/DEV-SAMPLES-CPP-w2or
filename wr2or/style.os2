@@ -1,0 +1,431 @@
+ 
+ These button control styles are available: 
+
+ BS_PUSHBUTTON 
+      A pushbutton is a box that contains a string.  When a button is pushed, by clicking the pointing device on it 
+      or pressing the spacebar when it is active, the parent window is notified. 
+
+ BS_CHECKBOX 
+      A check box is a small square with a character string to the right.  If it is checked, a small black box 
+      appears inside the small square. When the box or string is clicked, by clicking on it with the pointing device 
+      or pressing the keyboard spacebar when it is active, the check box changes state and the parent window is 
+      notified. 
+
+ BS_AUTOCHECKBOX 
+      An automatic check box automatically toggles its state whenever the user clicks on it. 
+
+ BS_RADIOBUTTON 
+      A radio button is similar to a check box, but is typically used in groups in which only one button at a time is 
+      checked.  When a radio button is clicked or a cursor key is pressed to move within the group, it notifies its 
+      owner window.  It is then up to the owner window to check the clicked radio button and uncheck all the rest, 
+      if necessary. 
+
+ BS_AUTORADIOBUTTON 
+      When clicked, an automatic radio button automatically checks itself and unchecks all other radio buttons in 
+      the same group. 
+
+ BS_3STATE 
+      A three-state check box is identical to a check box control except that its check box can be half-toned as well 
+      as the box being checked or unchecked. 
+
+ BS_AUTO3STATE 
+      An automatic three-state check box automatically toggles its state when the user clicks on it. 
+
+ BS_USERBUTTON 
+      This is an application-definable button.  The owner window of this style control receives the additional button 
+      style BN_PAINT. 
+ 
+ This style can be ORed with any of the basic button styles: 
+
+ BS_NOPOINTERFOCUS 
+      Buttons with this style do not set the focus to themselves when clicked with the pointing device. This enables 
+      the cursor to stay on a control for which information is required, rather than moving to the button. This style 
+      has no effect on keyboard interaction. The tab key can still be used as usual to move the focus to the button. 
+
+ BS_ICON 
+      Places an icon instead of text on the push button control. 
+
+ BS_AUTOSIZE 
+      Buttons with this style will be sized to make sure the contents fit. 
+ 
+ This style can be ORed with the BS_AUTORADIOBUTTON style: 
+
+ BS_NOCURSORSELECT 
+      The radio button does not select itself when given the focus as the result of an arrow key or tab key. 
+ 
+ These styles can be ORed with the BS_PUSHBUTTON style: 
+
+ BS_HELP 
+      The button posts a WM_HELP message rather than a WM_COMMAND message. 
+
+ BS_SYSCOMMAND 
+      The button posts a WM_SYSCOMMAND message rather than a WM_COMMAND message. 
+
+ BS_NOBORDER 
+      The pushbutton is displayed without a border drawn around it. There is no other change in the pushbutton's 
+      operation. 
+ 
+ If both BS_HELP and BS_SYSCOMMAND are set, BS_HELP takes precedence. 
+
+ This style can be ORed with the BS_PUSHBUTTON and BS_USERBUTTON styles: 
+
+ BS_DEFAULT 
+      A BS_DEFAULT pushbutton is one with a thick border box.  It has the same properties as a pushbutton. In 
+      addition, the user may press a BS_DEFAULT pushbutton by pressing the RETURN or ENTER key. The 
+      intention is the same for user-buttons, but the appearance of a BS_DEFAULT userbutton is application 
+      defined. 
+ 
+
+ These combo box control styles are available: 
+
+ CBS_SIMPLE 
+    Both the entry field control and the list box control are visible. When the selection changes in the list box 
+    control, the text of the selected item in the list box control is placed in the entry field. Also, the text in the 
+    entry field is completed by extending the text of the entry field with the closest match from the list box. 
+
+ CBS_DROPDOWN 
+    Inherits all the properties of a combo box control with a style of CBS_SIMPLE and, in addition, the list box 
+    control is hidden until the user requests that it should be displayed. 
+
+ CBS_DROPDOWNLIST 
+    In which the entry field control is replaced by a static control, that displays the current selection from the list 
+    box control. The user must explicitly cause the display of the list box control in order to make alternative 
+    selections in the list box. 
+ 
+
+ These entry field control styles are available: 
+
+ ES_LEFT 
+    The text in the control is left-justified. This is the default style if neither ES_RIGHT nor ES_CENTER is 
+    specified. 
+
+ ES_RIGHT 
+    The text in the control is right-justified. 
+
+ ES_CENTER 
+    The text in the control is centered. 
+
+ ES_AUTOSIZE 
+    The text will be sized to make sure the contents fit. 
+
+ ES_AUTOSCROLL 
+    If the user tries to move off the end of a line, the control automatically scrolls one-third the width of the window 
+    in the appropriate direction. 
+
+ ES_MARGIN 
+    This style can be used to cause a border to be drawn around the control, with a margin around the editable 
+    text. The margin is half a character-width wide and half a character-height high. 
+
+    When an entry field control with this style is positioned, it adjusts the position so that the text is placed at the 
+    position specified. This position differs from the original position by the width of the border and the margin. 
+
+ ES_READONLY 
+    This style causes a single line entry field to be created in read only state. 
+
+    When an entry field is in read only state, characters do not get inserted into the text. However the insertion 
+    interface is still functional. 
+
+    The entry field read only state can be altered by use of the EM_SETREADONLY message. 
+
+ ES_UNREADABLE 
+    This style causes the text to be displayed as an asterisk for each character. It can be used for passwords. 
+
+ ES_COMMAND 
+    This style identifies the entry field as a command entry field. This information is used by the Help Manager to 
+    provide command help if the end user requests help for this field. 
+
+    Not more than one entry field on each dialog should be given this style. 
+
+ ES_AUTOTAB 
+    This style indicates that when the field is filled by adding a character to the end of the entry field text, the 
+    effect of a tab key will be generated. Inserting or replacing a character in the middle of the text, however, does 
+    not result in an autotab. 
+
+    This style is recommended for use with fixed-length, non-scrollable fields that are filled completely. The 
+    maximum length of the entry field text is held in the control data, see ENTRYFDATA. 
+ 
+ These entry field controls are intended for countries that use a double-byte character encoding scheme: 
+
+ ES_SBCS 
+      The text is purely single-byte. 
+
+      If the number of characters entered exceeds EM_SETTEXTLIMIT, or a DBCS character is entered, the alarm 
+      sounds and the last character entered is ignored. 
+
+ ES_DBCS 
+      The text is purely double byte. 
+
+      If the number of bytes in the entry field exceeds EM_SETTEXTLIMIT, or an SBCS character is entered, the 
+      alarm sounds and the last character entered is ignored. 
+
+ ES_ANY 
+      The text is a mixture of SBCS and DBCS characters. 
+
+      If the number of bytes in the input field exceeds EM_SETTEXTLIMIT, the alarm sounds and the last character 
+      entered is ignored. 
+
+      ES_ANY is the default. 
+
+      Note:  If the queue code page is an ASCII code page and the data in the entry field is to be converted to an 
+      EBCDIC code page, there is a possibility that shift-in and shift-out characters introduced by the conversion 
+      process can cause the converted data to overrun the target field. Coding ES_MIXED protects the target field 
+      from overrun in this situation. 
+
+ ES_MIXED 
+      The text is a mixture of SBCS and DBCS characters which may subsequently be converted from an ASCII 
+      DBCS code page to an EBCDIC DBCS code page with a consequent possible increase in the length of the 
+      data. 
+
+      If 
+
+      DBCSchars*2 + SBCSchars + N > EM_SETTEXTLIMIT
+      
+      where N starts at 0 and is incremented whenever the string goes from SBCS to DBCS or DBCS to SBCS, the 
+      alarm sounds and the last character entered is ignored. 
+
+      Note:  For every conversion from SBCS to DBCS there must be a corresponding return to SBCS (N must be 
+      an even number). 
+ 
+
+ 
+ This system-provided window procedure processes the actions on a list box control (WC_LISTBOX). 
+
+ Purpose 
+
+ A list box control is a window containing a list of items. Each item in a list box contains a text string (0 or more 
+ characters) and a handle. The text string is displayed in the list box window. The handle can be used by the 
+ application to refer to other data associated with each item. 
+
+ List Box Control Styles 
+
+ These list box control styles are available: 
+
+ LS_HORZSCROLL 
+      The list box control enables the operator to scroll the list box horizontally. 
+
+ LS_MULTIPLESEL 
+      The list box control enables the operator to select more than one item at any one time. Lists that do not have 
+      this style allow only a single selection at any one time. If this style is specified, LS_EXTENDEDSEL should 
+      also be specified. 
+
+ LS_EXTENDEDSEL 
+      If this style is specified, the extended selection user interface is enabled. 
+
+ LS_OWNERDRAW 
+      The list box control has one or more items that can be drawn by the owner. Typically, these items are 
+      represented by bit maps rather than by text strings. 
+
+ LS_NOADJUSTPOS 
+      If this style is included, the list box control is drawn at the size specified. This can cause parts of an item to 
+      be shown. 
+ 
+
+ 
+ These multi-line entry field control styles are available: 
+
+ MLS_BORDER 
+      A thin border is drawn around the multi-line entry field window. 
+
+ MLS_READONLY 
+      The multi-line entry field is initially in read-only mode. 
+
+ MLS_WORDWRAP 
+      The multi-line entry field initially word-wraps text. 
+
+ MLS_HSCROLL 
+      The multi-line entry field displays and handles a horizontal scroll bar. 
+
+ MLS_VSCROLL 
+      The multi-line entry field displays and handles a vertical scroll bar. 
+
+ MLS_IGNORETAB 
+      The multi-line entry field ignores tab key strokes. It passes the appropriate WM_CHAR to its owner window. 
+
+ MLS_DISABLEUNDO 
+      The multi-line entry field will not allow undo actions. 
+ 
+
+ 
+ Slider control window styles are set when a slider window is created. The following styles can be set when 
+ creating a slider control window. If no styles are specified, defaults, which are identified in the following 
+ descriptions, are used. 
+
+ o Specify either of the following to determine the slider's orientation: 
+
+    SLS_HORIZONTAL 
+         The slider is positioned horizontally. The slider arm can move left and right on the slider shaft. A scale 
+         can be placed on top of the slider shaft, below the slider shaft, or in both places. This is the default 
+         orientation of the slider. 
+
+    SLS_VERTICAL 
+         The slider is positioned vertically. The slider arm can move up and down the slider shaft. A scale can be 
+         placed on the left side of the slider shaft, on the right side of the slider shaft, or in both places. 
+
+ o Specify one of the following to position the slider within the slider window: 
+
+    SLS_CENTER 
+         The slider is centered in the slider window. This is the default positioning of the slider. 
+
+    SLS_BOTTOM 
+         The slider is positioned at the bottom of the slider window. This is valid for horizontal sliders only. 
+
+    SLS_TOP 
+         The slider is positioned at the top of the slider window. This is valid for horizontal sliders only. 
+
+    SLS_LEFT 
+         The slider is positioned at the left edge of the slider window. This is valid for vertical sliders only. 
+
+    SLS_RIGHT 
+         The slider is positioned at the right edge of the slider window. This is valid for vertical sliders only. 
+
+ o Specify one of the following to determine the location of the scale on the slider shaft: 
+
+    SLS_PRIMARYSCALE1 
+         The slider uses the increment and spacing specified for scale 1 as the incremental value for positioning 
+         the slider arm. Scale 1 is displayed above the slider shaft of a horizontal slider and to the right of the 
+         slider shaft of a vertical slider. This is the default for a slider. 
+
+    SLS_PRIMARYSCALE2 
+         The slider uses the increment and spacing specified for scale 2 as the incremental value for positioning 
+         the slider arm. Scale 2 is displayed below the slider shaft of a horizontal slider and to the left of the 
+         slider shaft of a vertical slider. 
+
+ o Specify one of the following to determine the slider arm's home position: 
+
+    SLS_HOMELEFT 
+         The slider uses the left edge of the slider as the base value for incrementing. This is the default for 
+         horizontal sliders and is valid for horizontal sliders only. 
+
+    SLS_HOMERIGHT 
+         The slider uses the right edge of the slider as the base value for incrementing. This is valid for horizontal 
+         sliders only. 
+
+    SLS_HOMEBOTTOM 
+         The slider uses the bottom of the slider as the base value for incrementing. This is the default for vertical 
+         sliders and is valid for vertical sliders only. 
+
+    SLS_HOMETOP 
+         The slider uses the top of the slider as the base value for incrementing. This is valid for vertical sliders 
+         only. 
+
+ o Specify one of the following to determine the location of the slider buttons. If you do not specify one of these 
+   styles, or if conflicting styles are specified, slider buttons are not included in the slider control. 
+
+    SLS_BUTTONSLEFT 
+         The slider includes incremental slider buttons with the control and places them to the left of the slider 
+         shaft. These slider buttons move the slider arm by one position, either left or right, in the direction that is 
+         selected. This is valid for horizontal sliders only. 
+
+    SLS_BUTTONSRIGHT 
+         The slider includes incremental slider buttons with the control and places them to the right of the slider 
+         shaft. These slider buttons move the slider arm by one position, either left or right, in the direction that is 
+         selected. This is valid for horizontal sliders only. 
+
+    SLS_BUTTONSBOTTOM 
+         The slider includes incremental slider buttons with the control and places them at the bottom of the slider 
+         shaft. These slider buttons move the slider arm by one position, either up or down, in the direction that is 
+         selected. This is valid for vertical sliders only. 
+
+    SLS_BUTTONSTOP 
+         The slider includes incremental slider buttons with the control and places them at the top of the slider 
+         shaft. These slider buttons move the slider arm by one position, either up or down, in the direction that is 
+         selected. This is valid for vertical sliders only. 
+
+ o Other styles that you can specify: 
+
+    SLS_SNAPTOINCREMENT 
+         The slider arm, when moved to a position between two specified values on the slider scale, such as 
+         between two tick marks, is positioned on the nearest value and is redrawn at that position. If this style is 
+         not specified, the slider arm remains at the position to which it is moved. 
+
+    SLS_READONLY 
+         The slider is created as a read-only slider. This means that the user cannot interact with the slider. It is 
+         used merely as a mechanism to present a quantity to the user, such as the percentage of completion of an 
+         ongoing task. Visual differences for a read-only slider include a narrow slider arm, no slider buttons and 
+         no detents. 
+
+    SLS_RIBBONSTRIP 
+         As the slider arm moves, the slider fills the slider shaft between the home position and the slider arm with 
+         a color value that is different from the slider shaft color, similar to the mercury in a thermometer. 
+
+    SLS_OWNERDRAW 
+         The application is notified whenever the slider shaft, the ribbon strip, the slider arm, and the slider 
+         background are to be drawn. 
+ 
+
+ 
+ These static control styles are available: 
+
+ SS_TEXT 
+      Creates a box with formatted text. The text is formatted before it is displayed according to the setting of 
+      these text drawing-style flags: 
+
+    DT_LEFT Left-justified text 
+    DT_CENTER Centered text 
+    DT_RIGHT Right-justified text 
+
+      ORed with one of: 
+
+    DT_TOP Text is aligned to top of window 
+    DT_VCENTER Text is aligned vertically in center of window 
+    DT_BOTTOM Text is aligned to bottom of window 
+
+      The following text drawing style can also be ORed, but only if DT_TOP and DT_LEFT are also specified: 
+
+    DT_WORDBREAK Text is multi-line with word-wrapping at ends of lines. 
+
+      Note:  For "static" text that can be selected, a Button Control with a style of BS_NOBORDER can be used. 
+
+      
+
+ SS_GROUPBOX 
+      A group box static control is a box that has an identifying text string in its upper left corner.  Group boxes 
+      are used to collect a group of radio buttons or other controls into a single unit. 
+
+ SS_ICON 
+      Draws an icon.  The text of the static control is a string that is used to derive the resource ID from which the 
+      icon is loaded. The format of the string is: 
+
+    o The first byte is X'FF', the second byte is the low byte of the resource ID, and the third byte is the high byte 
+      of the resource ID. 
+
+    o The first character is "#"; subsequent characters make up the decimal text representation of the resource ID. 
+      This format can be used for specifying a system icon in a resource file. The decimal string is the value of the 
+      appropriate SPTR_* constant 
+
+      If the string is empty or does not follow the format above, no resource is loaded. 
+
+      The resource is assumed to reside in the resource file of the current process. 
+
+      This control is resized to the size of the icon. 
+
+ SS_SYSICON 
+      This style is the same as SS_ICON except that the icon ID is specified as one of the system pointer ID 
+      values (SPTR_* values) rather than a resource ID.  This style provides a convenient way to include system 
+      icons in application dialog boxes. 
+
+ SS_BITMAP 
+      Draws a bit map.  The text of the static control names the bit-map resource, as for SS_ICON. 
+
+ SS_FGNDRECT 
+      Creates a rectangle filled with the color of the foreground. 
+
+ SS_BKGNDRECT 
+      Creates a rectangle filled with the color of the background. 
+
+ SS_FGNDFRAME 
+      Creates a box with frame color equal to the foreground color. 
+
+ SS_BKGNDFRAME 
+      Creates a box with frame color equal to the background color. 
+
+ SS_HALFTONERECT 
+      Creates a rectangle filled with halftone shading. 
+
+ SS_HALFTONEFRAME 
+      Creates a box with halftone shading frame. 
+
+ SS_AUTOSIZE 
+      The static control will be sized to make sure the contents fit. 
+ 
+

@@ -1,0 +1,1696 @@
+
+ Syntax: 
+
+   CONTROL text, id, x, y, width, height, class[, style]
+   [ data-definitions ]
+   [ BEGIN
+   control-definition
+       .
+       .
+       .
+   END ]
+ 
+ Description 
+
+ The CONTROL statement defines a control as belonging to the specified class. 
+ The statement defines the position and dimensions of the control within the 
+ parent window, as well as the control style. The CONTROL statement is most 
+ often used in a DIALOG or WINDOW statement. 
+
+ Typically, several CONTROL statements are used in each DIALOG statement, 
+ and each CONTROL statement must have a unique id value. The optional 
+ BEGIN and END statements enclose any CONTROL statements that may be 
+ given with the control.  CONTROL statements given in this manner represent 
+ child windows belonging to the control created by the CONTROL statement. 
+
+ text 
+      Specifies text that is displayed to the right of the control. This field must 
+      contain zero or more characters enclosed in double quotation marks. 
+      Character values must be in the range 1 through 255. If a double quotation 
+      mark is required in the text, you must include the double quotation mark 
+      twice. In the appropriate styles, a tilde ( ~ ) character in the text indicates 
+      that the following character is used as a mnemonic character for the control. 
+      When the control is displayed, the tilde is not shown, but the mnemonic 
+      character is underlined. The user can choose the control by pressing the 
+      key corresponding to the underlined mnemonic character. 
+
+ id 
+      Specifies the control identifier. This value must be an integer in the range 0 
+      through 65 535, or a simple expression that evaluates to a value in that 
+      range. 
+
+ x 
+      Specifies the x-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the parent window. 
+
+ y 
+      Specifies the y-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the parent window. 
+
+ width 
+      Specifies the width of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The value is in n-character units. 
+
+ height 
+      Specifies the height of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The value is in 1/8-character units. 
+
+ class 
+      Specifies the control class. This value can be one of the classes specified 
+      in the table, "Control Classes," ("Control Classes@Control Classes") or the 
+      name of the control class enclosed in double quotation marks. 
+
+ style 
+      Specifies the control style. This value can be a combination of control 
+      styles. You can use the bitwise OR (|) operator to combine styles. 
+
+ data-definitions 
+      Specifies a CTLDATA and/or PRESPARAMS statement. These statements 
+      define control and presentation data for the control. For more information, 
+      see CTLDATA and PRESPARAMS Statement. 
+
+ control-definition 
+      Specifies a CONTROL statement or any one of several predefined control 
+      statements. These statements define the style, position, and dimensions of 
+      controls in the control.
+   
+
+ Comments 
+
+ The CONTROL statement can actually contain any combination of CONTROL, 
+ DIALOG, and WINDOW statements.  But typically, a CONTROL statement 
+ contains no such statements. 
+
+ Example 
+
+ This example creates a pushbutton control with the WS_TABSTOP and 
+ WS_VISIBLE styles. 
+
+   CONTROL "OK", 101, 10, 10, 20, 50, WC_BUTTON, BS_PUSHBUTTON |
+                                                 WS_TABSTOP    |
+                                                 WS_VISIBLE
+ 
+ Related Topics 
+
+ AUTOCHECKBOX 
+ AUTORADIOBUTTON 
+ CHECKBOX 
+ CTLDATA 
+ DEFPUSHBUTTON Statement 
+ DIALOG Statement 
+ GROUPBOX Statement 
+ PRESPARAMS Statement 
+ PUSHBUTTON Statement 
+ RADIOBUTTON Statement 
+ WINDOW Statement 
+ 
+
+
+ Syntax: 
+
+ DLGTEMPLATE dialog-id  load-option   mem-option
+ BEGIN
+ dialog-definition
+     .
+     .
+     .
+ END
+ 
+ Description 
+
+ The DLGTEMPLATE statement creates a dialog-box template.  A dialog-box 
+ template consists of a series of statements that define the identifier, load and 
+ memory options, dialog-box dimensions, and controls in the dialog box.  The 
+ dialog-box template can be loaded from the executable file by using the 
+ WinLoadDlg function. 
+
+ You can provide any number of dialog-box templates in a resource script file, 
+ but each template must have a unique dialog-id value. 
+
+ dialog-id 
+      Specifies the dialog-box identifier.  This value must be an integer in the 
+      range 0 through 65 535, or a simple expression that evaluates to a value in 
+      that range. 
+ load-option 
+      Specifies when the system loads the resource from the executable file into 
+      memory.  This value must be one of the following: 
+
+    PRELOAD 
+         System loads the resource when the application starts. 
+    LOADONCALL 
+         System loads the resource when the application calls the WinLoadDlg 
+         function.  This is the default option. 
+ mem-option 
+      Specifies how the system manages the resource when it is in memory. This 
+      value must be one or more of the following: 
+
+    FIXED 
+         System keeps the resource at a fixed memory location. 
+    MOVEABLE 
+         System moves the resource as necessary to compact memory. 
+    DISCARDABLE 
+         System discards the resource if it is no longer needed. The default 
+      setting is MOVEABLE and DISCARDABLE. 
+ dialog-definition 
+      Specifies a DIALOG statement. The statement defines the dimensions and 
+      style of the given dialog box. For details about the statement, see DIALOG 
+      Statement. 
+ 
+ Comments 
+
+ A DLGTEMPLATE statement can actually contain DIALOG, CONTROL, and 
+ WINDOW statements.  Typically, you include only one DIALOG statement. 
+
+ Example 
+
+ This example uses a DLGTEMPLATE statement to create a dialog box. 
+
+ DLGTEMPLATE ID_GETTIMER
+ BEGIN
+     DIALOG "Timer", 1, 10, 10, 100, 40
+     BEGIN
+         LTEXT "Time (0 - 15):", 4, 8, 24, 72, 12
+         ENTRYFIELD "0", ID_TIME, 80, 28, 16, 8, ES_MARGIN
+         DEFPUSHBUTTON "Enter", ID_TIMEOK, 10, 6, 36, 12
+         PUSHBUTTON "Cancel", ID_TIMECANCEL, 52, 6, 40, 12
+     END
+ END
+ 
+ Related Topics 
+
+ CONTROL 
+ DIALOG Statement 
+ WINDOW Statement 
+   
+ See "WinLoadDlg" in the Presentation Manager Reference. 
+ 
+
+ 
+ Syntax: 
+
+ DIALOG text, id, x, y, width, height[, [style][,
+ framectl]][data-definitions]
+ BEGIN
+ control-definition
+     .
+     .
+     .
+ END
+ 
+ Description 
+
+ The DIALOG statement defines a window that an application can use to create 
+ dialog boxes.  The statement defines the position and dimensions of the dialog 
+ box on the screen, as well as the dialog-box style.  The DIALOG statement is 
+ most often used in a DLGTEMPLATE statement. 
+
+ Typically, you use only one DIALOG statement in each DLGTEMPLATE 
+ statement, and the DIALOG statement contains at least one control definition. 
+
+ text 
+      Specifies the dialog-box title if the style specifies a title bar. This field must 
+      contain zero or more characters enclosed in double quotation marks. 
+      Character values must be in the range 1 through 255. If a double quotation 
+      mark is required in the title, you must include the double quotation mark 
+      twice. 
+ id 
+      Specifies the dialog-box identifier. This value must be an integer in the 
+      range 0 through 65 535, or a simple expression that evaluates to a value in 
+      that range. 
+ x 
+      Specifies the x-coordinate of the lower-left corner of the dialog box. This 
+      value must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      value is in dialog units, but its exact meaning depends on the dialog style. 
+      See the "Comments" section for details. 
+ y 
+      Specifies the y-coordinate of the lower-left corner of the dialog box. This 
+      value must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      value is in dialog units, but its exact meaning depends on the dialog style. 
+      See the "Comments" section for details. 
+ width 
+      Specifies the width of the dialog box. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The value is in n-character units. 
+ height 
+      Specifies the height of the dialog box. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The value is in 1/8-character units. 
+ style 
+      Specifies the dialog-box style.  This value can be any of the window, 
+      dialog-box, or frame styles. You can use the bitwise OR (|) operator to 
+      combine styles. 
+ framectl 
+      Specifies the styles for frame controls belonging to the dialog box.  This 
+      value can be any of the frame-control styles specified in the table, 
+      "Frame-Control Flags."  ("Frame-Control Flags@Frame-Control Flag") You can 
+      use the bitwise OR (|) operator to combine styles. 
+ data-definitions 
+      Specifies a CTLDATA and/or PRESPARAMS statement. These statements 
+      define control and presentation data for the dialog box. For more 
+      information, see CTLDATA and PRESPARAMS Statement. 
+ control-definition 
+      Specifies a CONTROL statement or any one of several predefined control 
+      statements. These statements define the style, position, and dimensions of 
+      controls in the dialog box. 
+ 
+ Comments 
+
+ The exact meaning of the coordinates depends on the style defined by the style 
+ field. For dialog boxes with FS_SCREENALIGN style, the coordinates are relative 
+ to the origin of the display screen. For dialog boxes with the style 
+ FS_MOUSEALIGN, the coordinates are relative to the position of the mouse 
+ pointer at the time the dialog box is created. For all other dialog boxes, the 
+ coordinates are relative to the origin of the parent window. 
+
+ The DIALOG statement can actually contain any combination of CONTROL, 
+ DIALOG, and WINDOW statements. Typically, a DIALOG statement contains one 
+ or more CONTROL statements. 
+
+ Example 
+
+ This example creates a dialog box that is labeled "Disk Error." 
+
+ DLGTEMPLATE 1
+ BEGIN
+     DIALOG  "Disk Error", 100, 10, 10, 300, 110
+     BEGIN
+         CTEXT "Select One:", 1, 10, 80, 280, 12
+         RADIOBUTTON "Retry", 2, 75, 50, 60, 12
+         RADIOBUTTON "Abort", 3, 75, 30, 60, 12
+         RADIOBUTTON "Ignore", 4, 75, 10, 60, 12
+     END
+ END
+ 
+ Related Topics 
+
+ CONTROL 
+ CTLDATA 
+ DLGTEMPLATE Statement 
+ PRESPARAMS Statement 
+ WINDOW Statement 
+ 
+
+ 
+ Syntax: 
+
+   AUTOCHECKBOX text, id, x, y, width, height[, style]
+ 
+ Description 
+
+ The AUTOCHECKBOX statement creates an automatic-check-box control. The 
+ control is a small rectangle (check box) that contains an X when the user 
+ selects it.  The specified text is displayed to the right of the check box.  An X 
+ appears in the square when the user first selects the control and disappears 
+ the next time the user selects it.  The AUTOCHECKBOX statement, which you 
+ can use only in a DIALOG or WINDOW statement, defines the text, identifier, 
+ dimensions, and attributes of a control window.  The predefined class for this 
+ control is WC_BUTTON. If you do not specify the style, the default style is 
+ BS_AUTOCHECKBOX and WS_TABSTOP. 
+
+ text 
+      Specifies text that is displayed to the right of the control. This field must 
+      contain zero or more characters enclosed in double quotation marks. 
+      Character values must be in the range 1 through 255. If a double quotation 
+      mark is required in the text, you must include the double quotation mark 
+      twice. A tilde ( ~ ) character in the text indicates that the following character 
+      is used as a mnemonic character for the control. When the control is 
+      displayed, the tilde is not shown, but the mnemonic character is underlined. 
+      The user can choose the control by pressing the key corresponding to the 
+      underlined mnemonic character. 
+
+ id 
+      Specifies the control identifier. This value must be an integer in the range 0 
+      through 65 535, or a simple expression that evaluates to a value in that 
+      range. 
+
+ x 
+      Specifies the x-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+
+ y 
+      Specifies the y-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+
+ width 
+      Specifies the width of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The width is in n-character units. 
+
+ height 
+      Specifies the height of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The height is in 1/8-character units. 
+
+ style 
+      Specifies the control styles. This value can be a combination of the styles 
+      specified for WC_BUTTON. You can use the bitwise OR (|) operator to 
+      combine styles. 
+ 
+ Example 
+
+ This example creates an automatic-check-box control that is labeled "Italic." 
+
+   AUTOCHECKBOX "Italic", 101, 10, 10, 100, 100
+ 
+ Related Topics 
+
+ AUTORADIOBUTTON 
+ CHECKBOX 
+ CONTROL 
+ DEFPUSHBUTTON Statement 
+ DIALOG Statement 
+ GROUPBOX Statement 
+ PUSHBUTTON Statement 
+ RADIOBUTTON Statement 
+ WINDOW Statement 
+ 
+
+ 
+ Syntax: 
+
+ AUTORADIOBUTTON text, id, x, y, width, height[, style]
+ 
+ Description 
+
+ The AUTORADIOBUTTON statement creates an automatic-radio-button control.  
+ This control is a small circle with the given text displayed to its right.  The 
+ control highlights the circle and sends a message to its parent window when 
+ the user selects the button.  The control also removes the selection from any 
+ other automatic-radio-button controls in the same group.  When the user selects 
+ the button again, the control removes the highlight before sending a message.  
+ The AUTORADIOBUTTON statement, which you can use only in a DIALOG or 
+ WINDOW statement, defines the text, identifier, dimensions, and attributes of a 
+ control window.  The predefined class for this control is WC_BUTTON.  If you 
+ do not specify a style, the default style is BS_AUTORADIOBUTTON. 
+
+ text 
+      Specifies text that is displayed to the right of the control.  This field must 
+      contain zero or more characters enclosed in double quotation marks.  
+      Character values must be in the range 1 through 255.  If a double quotation 
+      mark is required in the text, you must include the double quotation mark 
+      twice.  A tilde ( ~ ) character in the text indicates that the following character 
+      is used as a mnemonic character for the control.  When the control is 
+      displayed, the tilde is not shown, but the mnemonic character is underlined. 
+      The user can choose the control by pressing the key corresponding to the 
+      underlined mnemonic character. 
+
+ id 
+      Specifies the control identifier. This value must be an integer in the range 0 
+      through 65 535, or a simple expression that evaluates to a value in that 
+      range. 
+
+ x 
+      Specifies the x-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+
+ y 
+      This value must be an integer in the range 0 through 65 535 n expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+
+ width 
+      Specifies the width of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The width is in n-character units. 
+
+ height 
+      Specifies the height of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The height is in 1/8-character units. 
+
+ style 
+      Specifies the control styles.  This value can be a combination of the styles 
+      specified for WC_BUTTON. You can use the bitwise OR (|) operator to 
+      combine styles. 
+ 
+ Example 
+
+ This example creates an automatic-radio-button control that is labeled "Italic." 
+
+   AUTORADIOBUTTON "Italic", 101, 10, 10, 24, 50
+ 
+ Related Topics 
+
+ AUTOCHECKBOX 
+ CHECKBOX 
+ CONTROL 
+ DEFPUSHBUTTON Statement 
+ DIALOG Statement 
+ GROUPBOX Statement 
+ PUSHBUTTON Statement 
+ RADIOBUTTON Statement 
+ WINDOW Statement 
+ 
+
+ 
+ Syntax: 
+
+ CHECKBOX text, id, x, y, width, height[, style]
+ 
+ Description 
+
+ The CHECKBOX statement creates a check-box control.  The control is a small 
+ rectangle (check box) that has the specified text displayed to the right.  The 
+ control highlights the rectangle and sends a message to its parent window 
+ when the user selects the control.  The CHECKBOX statement, which you can 
+ use only in a DIALOG or WINDOW statement, defines the text, identifier, 
+ dimensions, and attributes of a control window.  The predefined class for this 
+ control is WC_BUTTON.  If you do not specify a style, the default style is 
+ BS_CHECKBOX and WS_TABSTOP. 
+
+ text 
+      Specifies text that is displayed to the right of the control. This field must 
+      contain zero or more characters enclosed in double quotation marks. 
+      Character values must be in the range 1 through 255. If a double quotation 
+      mark is required in the text, you must include the double quotation mark 
+      twice. A tilde ( ~ ) character in the text indicates that the following character 
+      is used as a mnemonic character for the control. When the control is 
+      displayed, the tilde is not shown, but the mnemonic character is underlined. 
+      The user can choose the control by pressing the key corresponding to the 
+      underlined mnemonic character. 
+
+ id 
+      Specifies the control identifier. This value must be an integer in the range 0 
+      through 65 535, or a simple expression that evaluates to a value in that 
+      range. 
+
+ x 
+      Specifies the x-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+
+ y 
+      Specifies the y-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+
+ width 
+      Specifies the width of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The width is in n-character units. 
+
+ height 
+      Specifies the height of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The height is in 1/8-character units. 
+
+ style 
+      Specifies the control styles. This value can be a combination of the styles 
+      specified for WC_BUTTON. You can use the bitwise OR (|) operator to 
+      combine styles. 
+ 
+ Example 
+
+ This example creates a check-box control that is labeled "Italic." 
+
+   CHECKBOX "Italic", 101, 10, 10, 100, 100
+ 
+ Related Topics 
+
+ AUTOCHECKBOX 
+ AUTORADIOBUTTON 
+ CONTROL 
+ DEFPUSHBUTTON Statement 
+ DIALOG Statement 
+ GROUPBOX Statement 
+ PUSHBUTTON Statement 
+ RADIOBUTTON Statement 
+ WINDOW Statement 
+ 
+
+ 
+ Syntax: 
+
+   COMBOBOX text, id, x, y, width, height[, style]
+ 
+ Description 
+
+ The COMBOBOX statement creates a combination-box control. This control 
+ combines a list-box control with an entry-field control. It allows the user to 
+ place the selected item from a list box into an entry field. 
+
+ The COMBOBOX statement, which you can use only in a DIALOG or WINDOW 
+ statement, defines the text, identifier, dimensions, and attributes of a control 
+ window. The predefined class for this control is WC_COMBOBOX. If you do not 
+ specify a style, the default style is CBS_SIMPLE, WS_GROUP, WS_TABSTOP, 
+ and WS_VISIBLE. 
+
+ text 
+      Specifies text that is displayed in the entry field of the control. This field 
+      must contain zero or more characters enclosed in double quotation marks. 
+      Character values must be in the range 1 through 255. If a double quotation 
+      mark is required in the text, you must include the double quotation mark 
+      twice. 
+
+ id 
+      Specifies the control identifier. This value must be an integer in the range 0 
+      through 65 535, or a simple expression that evaluates to a value in that 
+      range. 
+
+ x 
+      Specifies the x-coordinate of the lower-left corner of the control This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+
+ y 
+      Specifies the y-coordinate of the lower-left corner of the control This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+
+ width 
+      Specifies the width of the control.  This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator.  The width is in n-character units. 
+
+ height 
+      Specifies the height of the control.  This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator.  The height is in 1/8-character units. 
+
+ style 
+      Specifies the control styles. This value can be a combination of the styles 
+      specified for WC_COMBOBOX. You can use the bitwise OR (|) operator to 
+      combine styles. 
+ 
+ Example 
+
+ This example creates a combination-box control. 
+
+   COMBOBOX "", 101, 10, 10, 24, 50
+ 
+ Related Topics 
+
+ CONTROL 
+ DIALOG Statement 
+ ENTRYFIELD Statement 
+ LISTBOX Statement 
+ MLE Statement 
+ WINDOW Statement 
+ 
+
+ 
+ Syntax: 
+
+   CONTROL text, id, x, y, width, height, class[, style]
+   [ data-definitions ]
+   [ BEGIN
+   control-definition
+       .
+       .
+       .
+   END ]
+ 
+ Description 
+
+ The CONTROL statement defines a control as belonging to the specified class. 
+ The statement defines the position and dimensions of the control within the 
+ parent window, as well as the control style. The CONTROL statement is most 
+ often used in a DIALOG or WINDOW statement. 
+
+ Typically, several CONTROL statements are used in each DIALOG statement, 
+ and each CONTROL statement must have a unique id value. The optional 
+ BEGIN and END statements enclose any CONTROL statements that may be 
+ given with the control.  CONTROL statements given in this manner represent 
+ child windows belonging to the control created by the CONTROL statement. 
+
+ text 
+      Specifies text that is displayed to the right of the control. This field must 
+      contain zero or more characters enclosed in double quotation marks. 
+      Character values must be in the range 1 through 255. If a double quotation 
+      mark is required in the text, you must include the double quotation mark 
+      twice. In the appropriate styles, a tilde ( ~ ) character in the text indicates 
+      that the following character is used as a mnemonic character for the control. 
+      When the control is displayed, the tilde is not shown, but the mnemonic 
+      character is underlined. The user can choose the control by pressing the 
+      key corresponding to the underlined mnemonic character. 
+
+ id 
+      Specifies the control identifier. This value must be an integer in the range 0 
+      through 65 535, or a simple expression that evaluates to a value in that 
+      range. 
+
+ x 
+      Specifies the x-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the parent window. 
+
+ y 
+      Specifies the y-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the parent window. 
+
+ width 
+      Specifies the width of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The value is in n-character units. 
+
+ height 
+      Specifies the height of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The value is in 1/8-character units. 
+
+ class 
+      Specifies the control class. This value can be one of the classes specified 
+      in the table, "Control Classes," ("Control Classes@Control Classes") or the 
+      name of the control class enclosed in double quotation marks. 
+
+ style 
+      Specifies the control style. This value can be a combination of control 
+      styles. You can use the bitwise OR (|) operator to combine styles. 
+
+ data-definitions 
+      Specifies a CTLDATA and/or PRESPARAMS statement. These statements 
+      define control and presentation data for the control. For more information, 
+      see CTLDATA and PRESPARAMS Statement. 
+
+ control-definition 
+      Specifies a CONTROL statement or any one of several predefined control 
+      statements. These statements define the style, position, and dimensions of 
+      controls in the control.
+   
+
+ Comments 
+
+ The CONTROL statement can actually contain any combination of CONTROL, 
+ DIALOG, and WINDOW statements.  But typically, a CONTROL statement 
+ contains no such statements. 
+
+ Example 
+
+ This example creates a pushbutton control with the WS_TABSTOP and 
+ WS_VISIBLE styles. 
+
+   CONTROL "OK", 101, 10, 10, 20, 50, WC_BUTTON, BS_PUSHBUTTON |
+                                                 WS_TABSTOP    |
+                                                 WS_VISIBLE
+ 
+ Related Topics 
+
+ AUTOCHECKBOX 
+ AUTORADIOBUTTON 
+ CHECKBOX 
+ CTLDATA 
+ DEFPUSHBUTTON Statement 
+ DIALOG Statement 
+ GROUPBOX Statement 
+ PRESPARAMS Statement 
+ PUSHBUTTON Statement 
+ RADIOBUTTON Statement 
+ WINDOW Statement 
+ 
+
+ 
+ Syntax: 
+
+   CTEXT text, id, x, y, width, height[, style]
+ 
+ Description 
+
+ The CTEXT statement creates a centered-text control. The control is a simple 
+ rectangle displaying the given text centered in the rectangle. The text is 
+ formatted before it is displayed. Words that would extend past the end of a line 
+ are automatically wrapped to the beginning of the next line. The CTEXT 
+ statement, which you can use only in a DIALOG or WINDOW statement, defines 
+ the text, identifier, dimensions, and attributes of the control. The predefined 
+ class for this control is WC_STATIC. If you do not specify a style, the default 
+ style is SS_TEXT, DT_CENTER, and WS_GROUP. 
+
+ text 
+      Specifies text that is centered in the rectangular area of the control. This 
+      field must contain zero or more characters enclosed in double quotation 
+      marks. Character values must be in the range 1 through 255. If a double 
+      quotation mark is required in the text, you must include the double 
+      quotation mark twice. 
+
+ id 
+      Specifies the control identifier. This value must be an integer in the range 0 
+      through 65 535, or a simple expression that evaluates to a value in that 
+      range. 
+
+ x 
+      Specifies the x-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+
+ y 
+      Specifies the y-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+
+ width 
+      Specifies the width of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The width is in n-character units. 
+
+ height 
+      Specifies the height of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The height is in 1/8-character units. 
+
+ style 
+      Specifies the control styles. This value can be a combination of the styles 
+      specified for WC_STATIC. You can use the bitwise OR (|) operator to 
+      combine styles.
+   
+
+ Example 
+
+ This example creates a centered-text control that is labeled "Filename." 
+
+   CTEXT "Filename", 101, 10, 10, 100, 100
+ 
+ Related Topics 
+
+ CONTROL 
+ DIALOG Statement 
+ LTEXT Statement 
+ RTEXT Statement 
+ WINDOW Statement 
+ 
+
+ 
+ Syntax: 
+
+   CTLDATA word-value[, word-value][...]
+ 
+   CTLDATA string
+ 
+   CTLDATA MENU
+   BEGIN
+   menuitem-definition
+      .
+      .
+      .
+   END
+ 
+ Description 
+
+ The CTLDATA statement defines control data for a custom dialog box, window, 
+ or control.  The statement has three basic forms to permit specifying a menu or 
+ specifying data in words or characters.  The data can be in any format, since 
+ only your window procedure will use it. The window procedure of the dialog 
+ box, window, or control receives this data when the item is created.  It is up to 
+ the window procedure to process the data. 
+
+ word-value 
+      Specifies a 16-bit value. This value must be an integer in the range 0 
+      through 65 535. It must be in decimal notation. 
+
+ string 
+      Specifies a string of 8-bit characters. This field must contain zero or more 
+      characters enclosed in double quotation marks. Character values must be in 
+      the range 1 through 255. If a double quotation mark is required in the 
+      string, you must include the double quotation mark twice. 
+
+ menuitem-definition 
+      Specifies a MENUITEM or SUBMENU statement. These statements define 
+      the individual commands or submenus in the given menu. For details about 
+      these statements, see MENUITEM Statement and SUBMENU Statement. 
+ 
+ Comments 
+
+ CTLDATA is often used to supply data that controls the subsequent operation of 
+ the custom window. For example, the CTLDATA statement may contain extended 
+ style bits - that is, style bits designed specifically for your customized window. 
+
+ You should reserve the CTLDATA statement for window classes that you create 
+ yourself. 
+
+ Example 
+
+ This example creates a menu for the window created with the WINDOW 
+ statement. 
+
+   WINDOWTEMPLATE 1
+   BEGIN
+       WINDOW "Sample", 1, 0, 0, 100, 100, "MYCLASS", 0, FCF_STANDARD
+       CTLDATA MENU
+       BEGIN
+           MENUITEM "Exit", 101
+       END
+   END
+ 
+ Related Topics 
+
+ CONTROL 
+ DIALOG Statement 
+ FRAME Statement 
+ MENUITEM Statement 
+ PRESPARAMS Statement 
+ SUBMENU Statement 
+ WINDOW Statement 
+ 
+
+ 
+ Syntax: 
+
+ DEFPUSHBUTTON text, id, x, y, width, height[, style]
+ 
+ Description 
+
+ The DEFPUSHBUTTON statement creates a default pushbutton control. The 
+ control is a round-cornered rectangle containing the given text. The rectangle 
+ has a bold outline to represent that it is the default response for the user.  The 
+ control sends a message to its parent window when the user chooses the 
+ control.  The DEFPUSHBUTTON statement, which you can use only in a DIALOG 
+ or WINDOW statement, defines the text, identifier, dimensions, and attributes of 
+ the control.  The predefined class for this control is WC_BUTTON.  If you do 
+ not specify a style, the default style is BS_PUSHBUTTON, BS_DEFAULT, and 
+ WS_TABSTOP. 
+
+ text 
+      Specifies text that is centered in the rectangular area of the control. This 
+      field must contain zero or more characters enclosed in double quotation 
+      marks. Character values must be in the range 1 through 255. If a double 
+      quotation mark is required in the text, you must include the double 
+      quotation mark twice. A tilde ( ~ ) character in the text indicates that the 
+      following character is used as a mnemonic character for the control. When 
+      the control is displayed, the tilde is not shown, but the mnemonic character 
+      is underlined. The user can choose the control by pressing the key 
+      corresponding to the underlined mnemonic character. 
+ id 
+      Specifies the control identifier. This value must be an integer in the range 0 
+      through 65 535, or a simple expression that evaluates to a value in that 
+      range. 
+ x 
+      Specifies the x-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+ y 
+      Specifies the y-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+ width 
+      Specifies the width of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The width is in n-character units. 
+ height 
+      Specifies the height of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The height is in 1/8-character units. 
+ style 
+      Specifies the control styles. This value can be a combination of the styles 
+      specified for WC_BUTTON. You can use the bitwise OR (|) operator to 
+      combine styles. 
+ 
+ Example 
+
+ This example creates a default pushbutton control that is labeled "Cancel." 
+
+ DEFPUSHBUTTON "Cancel", 101, 10, 10, 24, 50
+ 
+ Related Topics 
+
+ AUTOCHECKBOX 
+ AUTORADIOBUTTON 
+ CHECKBOX 
+ CONTROL 
+ DIALOG Statement 
+ GROUPBOX Statement 
+ PUSHBUTTON Statement 
+ RADIOBUTTON Statement 
+ WINDOW Statement 
+ 
+
+ 
+ Syntax: 
+
+ EDITTEXT text, id, x, y, width, height, style
+ 
+ Description 
+
+ The EDITTEXT statement creates an entry-field control.  This control is a 
+ rectangle in which the user can type and edit text. The control displays a 
+ pointer when the user selects the control.  The user can then use the keyboard 
+ to enter text or edit the existing text.  Editing keys include the BACKSPACE and 
+ DELETE keys.  By using the mouse or the DIRECTION keys, the user can select 
+ the character or characters to delete or select the place to insert new 
+ characters. 
+
+ The EDITTEXT statement defines the text, identifier, dimensions, and attributes 
+ of a control window.  The predefined class for this control is WC_ENTRYFIELD.  
+ If you do not specify a style, the default style is ES_AUTOSCROLL and 
+ WS_TABSTOP. 
+
+ text      Specifies text that is displayed in the rectangular area of the control.  
+           This field must contain zero or more characters enclosed in double 
+           quotation marks.  Character values must be in the range 1 through 255.  
+           If a double quotation mark is required in the text, you must include the 
+           double quotation mark twice. 
+
+ id        Specifies the control identifier.   This value is any integer 0 through 65 
+           535, or a simple expression that evaluates to a value in that range. 
+
+ x         Specifies the x-coordinate of the lower-left corner of the control.  This 
+           value is any integer 0 through 65 535, or an expression consisting of 
+           integers and the addition (+) or subtraction (-) operator.  The coordinate 
+           is assumed to be in dialog units and is relative to the origin of the 
+           dialog window. 
+
+ y         Specifies the y-coordinate of the lower-left corner of the control.  This 
+           value is any integer 0 through 65 535, or an expression consisting of 
+           integers and the addition (+) or subtraction (-) operator.   The coordinate 
+           is assumed to be in dialog units and is relative to the origin of the 
+           dialog window. 
+
+ width     Specifies the width of the control.  This value is any integer 1 through 
+           65 535, or an expression consisting of integers and the addition (+) or 
+           subtraction (-) operator. The width is in n-character units. 
+
+ height    Specifies the height of the control.  This value is any integer 1 through 
+           65 535, or an expression consisting of integers and the addition (+) or 
+           subtraction (-) operator. The height is in 1/8-character units. 
+
+ style     Specifies the control styles. This value can be a combination of the 
+           styles specified for WC_ENTRYFIELD.  You can use the bitwise OR ( | ) 
+           operator to combine styles. 
+ 
+ Comments 
+
+ The EDITTEXT control statement is identical to the ENTRYFIELD control 
+ statement. 
+
+ Use the EDITTEXT statement only in a DIALOG or WINDOW statement. 
+
+ Example 
+
+ This example creates an entry-field control that is not labeled. 
+
+    EDITTEXT "", 101, 10, 10, 24, 50
+ 
+ Related Topics 
+
+ 
+ CONTROL Statement 
+ DIALOG Statement 
+ ENTRYFIELD Statement 
+ WINDOW Statement 
+ 
+
+ 
+
+ ENTRYFIELD text, id, x, y, width, height , style
+ 
+ The ENTRYFIELD statement creates an entry-field control.  This control is a 
+ rectangle in which the user can type and edit text.  The control displays a 
+ pointer when the user selects the control.  The user can then use the keyboard 
+ to enter text or edit the existing text. Editing keys include the BACKSPACE and 
+ DELETE keys.  By using the mouse or the DIRECTION keys, the user can select 
+ the character or characters to delete or select the place to insert new 
+ characters. The ENTRYFIELD statement, which you can use only in a DIALOG or 
+ WINDOW statement, defines the text, identifier, dimensions, and attributes of a 
+ control window.  The predefined class for this control is WC_ENTRYFIELD.  If 
+ you do not specify a style, the default style is ES_AUTOSCROLL and 
+ WS_TABSTOP. 
+
+ text 
+      Specifies text that is displayed in the rectangular area of the control. This 
+      field must contain zero or more characters enclosed in double quotation 
+      marks. Character values must be in the range 1 through 255. If a double 
+      quotation mark is required in the text, you must include the double 
+      quotation mark twice. 
+ id 
+      Specifies the control identifier. This value must be an integer in the range 0 
+      through 65 535, or a simple expression that evaluates to a value in that 
+      range. 
+ x 
+      Specifies the x-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+ y 
+      Specifies the y-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+ width 
+      Specifies the width of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The width is in n-character units. 
+ height 
+      Specifies the height of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The height is in 1/8-character units. 
+ style 
+      Specifies the control styles. This value can be a combination of the styles 
+      specified for WC_ENTRYFIELD. You can use the bitwise OR (|) operator to 
+      combine styles. 
+ 
+ Example 
+
+ This example creates an entry-field control that is not labeled. 
+
+ ENTRYFIELD "", 101, 10, 10, 24, 50
+ 
+ Related Topics 
+
+ CONTROL 
+ DIALOG Statement 
+ MLE Statement 
+ WINDOW Statement 
+ 
+
+ 
+ Syntax: 
+
+ GROUPBOX text, id, x, y, width, height , style
+ 
+ Description 
+
+ The GROUPBOX statement creates a group-box control.  The control is a 
+ rectangle that groups other controls together.  The controls are grouped by 
+ drawing a border around them and displaying the given text in the upper-left 
+ corner.  The GROUPBOX statement, which you can use only in a DIALOG or 
+ WINDOW statement, defines the text, identifier, dimensions, and attributes of a 
+ control window.  The predefined class for this control is WC_STATIC.  If you do 
+ not specify a style, the default style is SS_GROUPBOX and WS_TABSTOP. 
+
+ text 
+      Specifies text that appears in the upper-left corner of the control. This field 
+      must contain zero or more characters enclosed in double quotation marks. 
+      Character values must be in the range 1 through 255. If a double quotation 
+      mark is required in the text, you must include the double quotation mark 
+      twice. 
+ id 
+      Specifies the control identifier. This value must be an integer in the range 0 
+      through 65 535, or a simple expression that evaluates to a value in that 
+      range. 
+ x 
+      Specifies the x-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator.  The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+ y 
+      Specifies the y-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+ width 
+      Specifies the width of the control.  This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator.  The width is in n-character units. 
+ height 
+      Specifies the height of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The height is in 1/8-character units. 
+ style 
+      Specifies the control styles.  This value can be a combination of the styles 
+      specified for WC_STATIC. You can use the bitwise OR (|) operator to 
+      combine styles. 
+ 
+ Example 
+
+ This example creates a group-box control that is labeled "Options." 
+
+ GROUPBOX "Options", 101, 10, 10, 100, 100
+ 
+ Related Topics 
+
+ AUTOCHECKBOX 
+ AUTORADIOBUTTON 
+ CHECKBOX 
+ CONTROL 
+ DEFPUSHBUTTON Statement 
+ DIALOG Statement 
+ PUSHBUTTON Statement 
+ RADIOBUTTON Statement 
+ WINDOW Statement 
+ 
+
+ 
+ Syntax: 
+
+ ICON icon-id, id, x, y, width, height , style
+ 
+ Description 
+
+ This form of the ICON statement creates an icon control.  This control is an 
+ icon displayed in a dialog box.  The ICON statement, which you can use only in 
+ a DIALOG or WINDOW statement, defines the icon-resource identifier, 
+ icon-control identifier, position, and attributes of a control window.  The 
+ predefined class for this control is WC_STATIC.  If you do not specify a style, 
+ the default style is SS_ICON.  For the ICON statement, the width and height 
+ fields are ignored; the icon automatically sizes itself. 
+
+ icon-id 
+      Specifies the resource identifier of an icon that is defined elsewhere in the 
+      resource file. 
+ id 
+      Specifies the control identifier. This value must be an integer in the range 0 
+      through 65 535, or a simple expression that evaluates to a value in that 
+      range. 
+ x 
+      Specifies the x-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+ y 
+      Specifies the y-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+ width 
+      Specifies a reserved value. Can be set to zero. 
+ height 
+      Specifies a reserved value. Can be set to zero. 
+ style 
+      Specifies the control styles.  This value can be a combination of the styles 
+      specified for WC_STATIC. You can use the bitwise OR (|) operator to 
+      combine styles. 
+ 
+ Example 
+
+ This example creates an icon control whose icon identifier is 99. 
+
+ ICON 99, 101, 10, 10, 0, 0
+ 
+ Related Topics 
+
+ CONTROL 
+ DIALOG Statement 
+ ICON Statement (Resource) 
+ WINDOW Statement 
+ 
+
+ 
+ Syntax: 
+
+ LISTBOX id, x, y, width, height, style
+ 
+ Description 
+
+ The LISTBOX statement creates commonly used controls for a dialog box or 
+ window.  The control is a rectangle containing a list of user-selectable strings, 
+ such as filenames. 
+
+ The LISTBOX statement, which you can use only in a DIALOG or WINDOW 
+ statement, defines the identifier, dimensions, and attributes of a control window.  
+ The predefined class for this control is WC_LISTBOX.  If you do not specify a 
+ style, the default style is WS_TABSTOP. 
+
+ id 
+      Specifies the control identifier. This value must be an integer in the range 0 
+      through 65 535, or a simple expression that evaluates to a value in that 
+      range. 
+ x 
+      Specifies the x-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+ y 
+      Specifies the y-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+ width 
+      Specifies the width of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The width is in n-character units. 
+ height 
+      Specifies the height of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The height is in 1/8-character units. 
+ style 
+      Specifies the control styles. This value can be a combination of the styles 
+      specified for WC_LISTBOX. You can use the bitwise OR (|) operator to 
+      combine styles. 
+ 
+ Example 
+
+ This example creates a list-box control whose identifier is 101. 
+
+ LISTBOX 101, 10, 10, 100, 100
+ 
+ Related Topics 
+
+ CONTROL 
+ DIALOG Statement 
+ WINDOW Statement 
+ 
+
+ 
+ Syntax: 
+
+ LTEXT text, id, x, y, width, height , style
+ 
+ Description 
+
+ The LTEXT statement creates a left-aligned text control.  The control is a 
+ simple rectangle displaying the given text left-aligned in the rectangle.  The text 
+ is formatted before it is displayed.  Words that would extend past the end of a 
+ line are automatically wrapped to the beginning of the next line.  The LTEXT 
+ statement, which you can use only in a DIALOG or WINDOW statement, defines 
+ the text, identifier, dimensions, and attributes of the control.  The predefined 
+ class for this control is WC_STATIC.  If you do not specify a style, the default 
+ style is SS_TEXT, DT_LEFT, and WS_GROUP. 
+
+ text 
+      Specifies text that is left-aligned in the rectangular area of the control. This 
+      field must contain zero or more characters enclosed in double quotation 
+      marks. Character values must be in the range 1 through 255. If a double 
+      quotation mark is required in the text, you must include the double 
+      quotation mark twice. 
+ id 
+      Specifies the control identifier. This value must be an integer in the range 0 
+      through 65 535, or a simple expression that evaluates to a value in that 
+      range. 
+ x 
+      Specifies the x-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+ y 
+      Specifies the y-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+ width 
+      Specifies the width of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The width is in n-character units. 
+ height 
+      Specifies the height of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The height is in 1/8-character units. 
+ style 
+      Specifies the control styles. This value can be a combination of the styles 
+      specified for WC_STATIC. You can use the bitwise OR (|) operator to 
+      combine styles. 
+ 
+ Example 
+
+ This example creates a left-aligned text control that is labeled "Filename." 
+
+ LTEXT "Filename", 101, 10, 10, 100, 100
+ 
+ Related Topics 
+
+ CTEXT 
+ CONTROL 
+ DIALOG Statement 
+ RTEXT Statement 
+ WINDOW Statement 
+ 
+
+ 
+ Syntax: 
+
+ MLE text, id, x, y, width, height , style
+ 
+ Description 
+
+ The MLE statement creates a multiple-line entry-field control.  The control is a 
+ rectangle in which the user can type and edit multiple lines of text.  The control 
+ displays a pointer when the user selects it.  The user can then use the 
+ keyboard to enter text or edit the existing text.  Editing keys include the 
+ BACKSPACE and DELETE keys. By using the mouse or the DIRECTION keys, the 
+ user can select the character or characters to delete or select the place to 
+ insert new characters.  The MLE statement, which you can use only in a 
+ DIALOG or WINDOW statement, defines the text, identifier, dimensions, and 
+ attributes of a control window.  The predefined class for this control is 
+ WC_MLE.  If you do not specify a style, the default style is MLS_BORDER, 
+ WS_GROUP, and WS_TABSTOP. 
+
+ text 
+      Specifies text that is displayed in the rectangular area of the control. If the 
+      MLS_READONLY style is not specified, the user can edit the text. This field 
+      must contain zero or more characters enclosed in double quotation marks. 
+      Character values must be in the range 1 through 255. If a double quotation 
+      mark is required in the text, you must include the double quotation mark 
+      twice. 
+ id 
+      Specifies the control identifier. This value must be an integer in the range 0 
+      through 65 535, or a simple expression that evaluates to a value in that 
+      range. 
+ x 
+      Specifies the x-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+ y 
+      Specifies the y-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+ width 
+      Specifies the width of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The width is in n-character units. 
+ height 
+      Specifies the height of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The height is in 1/8-character units. 
+ style 
+      Specifies the control styles. This value can be a combination of the styles 
+      specified for WC_MLE. You can use the bitwise OR (|) operator to combine 
+      styles. 
+ 
+ Example 
+
+ This example creates a multiple-line entry-field control that is not labeled. 
+
+ MLE "", 101, 10, 10, 50, 100
+ 
+ Related Topics 
+
+ CONTROL 
+ DIALOG Statement 
+ ENTRYFIELD Statement 
+ WINDOW Statement 
+ 
+
+ 
+ Syntax: 
+
+ PUSHBUTTON text, id, x, y, width, height , style
+ 
+ Description 
+
+ The PUSHBUTTON statement creates a pushbutton control.  The control is a 
+ round-cornered rectangle containing the given text.  The control sends a 
+ message to its parent whenever the user chooses the control. The 
+ PUSHBUTTON statement, which you can use only in a DIALOG or WINDOW 
+ statement, defines the text, identifier, dimensions, and attributes of a control 
+ window.  The predefined class for this control is WC_BUTTON. If you do not 
+ specify a style, the default style is BS_PUSHBUTTON and WS_TABSTOP. 
+
+ text 
+      Specifies text that is centered in the rectangular area of the control. This 
+      field must contain zero or more characters enclosed in double quotation 
+      marks. Character values must be in the range 1 through 255. If a double 
+      quotation mark is required in the text, you must include the double 
+      quotation mark twice. A tilde ( ~ ) character in the text indicates that the 
+      following character is used as a mnemonic character for the control. When 
+      the control is displayed, the tilde is not shown, but the mnemonic character 
+      is underlined. The user can choose the control by pressing the key 
+      corresponding to the underlined mnemonic character. 
+ id 
+      Specifies the control identifier. This value must be an integer in the range 0 
+      through 65 535, or a simple expression that evaluates to a value in that 
+      range. 
+ x 
+      Specifies the x-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+ y 
+      Specifies the y-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+ width 
+      Specifies the width of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The width is in n-character units. 
+ height 
+      Specifies the height of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The height is in 1/8-character units. 
+ style 
+      Specifies the control styles. This value can be a combination of the styles 
+      specified for WC_BUTTON. You can use the bitwise OR (|) operator to 
+      combine styles. 
+ 
+ Example 
+
+ This example creates a pushbutton control that is labeled "OK." 
+
+ PUSHBUTTON "OK", 101, 10, 10, 100, 100
+ 
+ Related Topics 
+
+ AUTOCHECKBOX 
+ AUTORADIOBUTTON 
+ CHECKBOX 
+ CONTROL 
+ DEFPUSHBUTTON Statement 
+ DIALOG Statement 
+ GROUPBOX Statement 
+ RADIOBUTTON Statement 
+ WINDOW Statement 
+ 
+
+ 
+ Syntax: 
+
+ RADIOBUTTON text, id, x, y, width, height, style
+
+ Description 
+
+ The RADIOBUTTON statement creates a radio-button control.  The control is a 
+ small circle that has the given text displayed to its right.  The control highlights 
+ the circle and sends a message to its parent window when the user selects the 
+ button.  The control removes the highlight and sends a message when the 
+ button is next selected.  The RADIOBUTTON statement, which you can use only 
+ in a DIALOG or WINDOW statement, defines the text, identifier, dimensions, 
+ and attributes of a control window.  The predefined class for this control is 
+ WC_BUTTON.  If you do not specify a style, the default style is 
+ BS_RADIOBUTTON. 
+
+ text 
+      Specifies text that is displayed to the right of the control. This field must 
+      contain zero or more characters enclosed in double quotation marks. 
+      Character values must be in the range 1 through 255. If a double quotation 
+      mark is required in the text, you must include the double quotation mark 
+      twice. A tilde ( ~ ) character in the text indicates that the following character 
+      is used as a mnemonic character for the control. When the control is 
+      displayed, the tilde is not shown, but the mnemonic character is underlined. 
+      The user can choose the control by pressing the key corresponding to the 
+      underlined mnemonic character. 
+ id 
+      Specifies the control identifier. This value must be an integer in the range 0 
+      through 65 535, or a simple expression that evaluates to a value in that 
+      range. 
+ x 
+      Specifies the x-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+ y 
+      Specifies the y-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+ width 
+      Specifies the width of the control.  This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator.  The width is in n-character units. 
+ height 
+      Specifies the height of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The height is in 1/8-character units. 
+ style 
+      Specifies the control styles. This value can be a combination of the styles 
+      specified for WC_BUTTON. You can use the bitwise OR (|) operator to 
+      combine styles. 
+ 
+ Example 
+
+ This example creates a radio-button control that is labeled "Italic." 
+
+ RADIOBUTTON "Italic", 101, 10, 10, 24, 50
+ 
+ Related Topics 
+
+ AUTOCHECKBOX 
+ AUTORADIOBUTTON 
+ CHECKBOX 
+ CONTROL 
+ DEFPUSHBUTTON Statement 
+ DIALOG Statement 
+ GROUPBOX Statement 
+ PUSHBUTTON Statement 
+ WINDOW Statement 
+ 
+
+ 
+ Syntax: 
+
+ RTEXT text, id, x, y, width, height , style
+ 
+ Description 
+
+ The RTEXT statement creates a right-aligned text control.  The control is a 
+ simple rectangle displaying the given text right-aligned in the rectangle.  The 
+ text is formatted before it is displayed.  Words that would extend past the end 
+ of a line are automatically wrapped to the beginning of the next line.  The 
+ RTEXT statement, which you can use only in a DIALOG or WINDOW statement, 
+ defines the text, identifier, dimensions, and attributes of the control.  The 
+ predefined class for the control is WC_STATIC.  If you do not specify a style, 
+ the default style is SS_TEXT, DT_RIGHT, and WS_GROUP. 
+
+ text 
+      Specifies text that is right-aligned in the rectangular area of the control. 
+      This field must contain zero or more characters enclosed in double 
+      quotation marks. Character values must be in the range 1 through 255. If a 
+      double quotation mark is required in the text, you must include the double 
+      quotation mark twice. 
+ id 
+      Specifies the control identifier. This value must be an integer in the range 0 
+      through 65 535, or a simple expression that evaluates to a value in that 
+      range. 
+ x 
+      Specifies the x-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+ y 
+      Specifies the y-coordinate of the lower-left corner of the control. This value 
+      must be an integer in the range 0 through 65 535 or an expression 
+      consisting of integers and the addition (+) or subtraction (-) operator. The 
+      coordinate is assumed to be in dialog units and is relative to the origin of 
+      the dialog box, window, or control containing the specified control. 
+ width 
+      Specifies the width of the control.  This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator.  The width is in n-character units. 
+ height 
+      Specifies the height of the control. This value must be an integer in the 
+      range 1 through 65 535 or an expression consisting of integers and the 
+      addition (+) or subtraction (-) operator. The height is in 1/8-character units. 
+ style 
+      Specifies the control styles.  This value can be a combination of the styles 
+      specified for WC_STATIC. You can use the bitwise OR (|) operator to 
+      combine styles. 
+ 
+ Example 
+
+ This example creates a right-aligned text control that is labeled "Filename." 
+
+ RTEXT "Filename", 101, 10, 10, 100, 100
+ 
+ Related Topics 
+
+ CTEXT 
+ CONTROL 
+ DIALOG Statement 
+ LTEXT Statement 
+ WINDOW Statement 
+ 
+
+ 
+ Syntax: 
+
+ SLIDER   id, x, y, width, height, style
+ 
+ Description 
+
+ The SLIDER statement creates a slider control within the dialog window.  This 
+ control lets the user set, display, or modify a value by moving a slider arm 
+ along a slider shaft.   The SLIDER statement defines the identifier, position, 
+ dimensions, and attributes of a slider control.  The predefined class for this 
+ control is WC_SLIDER.  If you do not specify a style, the default style is 
+ WS_TABSTOP and WS_VISIBLE. 
+
+ id        Specifies the control identifier.  The value is any integer 0 through 
+           65535, or a simple expression that evaluates to a value in that range. 
+
+ x         Specifies the x-coordinate of the lower-left corner of the control.  The 
+           value is any integer 0 through 65535 or an expression consisting of 
+           integers and the addition [+] or subtraction [-] operator.  The coordinate 
+           is assumed to be in dialog units and is relative to the origin of the 
+           dialog window. 
+
+ y         Specifies the y-coordinate of the lower-left corner of the control.  The 
+           value is any integer 0 through 65535 or an expression consisting of 
+           integers and the addition [+] or subtraction [-] operator.  The coordinate 
+           is assumed to be in dialog units and is relative to the origin of the 
+           dialog window. 
+
+ width     Specifies the width of the control.  The value is any integer 0 through 
+           65535 or an expression consisting of integers and the addition [+] or 
+           subtraction [-] operator. The width is in n-character units. 
+
+ height    Specifies the height of the control.  The value is any integer 0 through 
+           65535 or an expression consisting of integers and the addition [+] or 
+           subtraction [-] operator. The height is in 1/8-character units. 
+
+ style     Specifies the control styles.  The value can be any combination of the 
+           styles specified for WC_SLIDER.  You can use the bitwise OR [ | ] 
+           operator to combine styles. 
+ 
+ Comments 
+
+ The SLIDER statement is only used in a DIALOG or WINDOW statement. 
+
+ Example 
+
+ This example creates a slider control at position (40, 30) within the dialog 
+ window.  The slider has a width of 120 character units and a height of 2 
+ character units.  Its resource ID is 101. The style specification 
+ SLS_BUTTONSLEFT adds buttons to the left of the slider shaft.  The default 
+ styles WS_TABSTOP and WS_VISIBLE are both in effect, though only the latter 
+ is specified. 
+
+ #define    IDC_SLIDER       101
+ #define    IDD_SLIDERDLG    502
+ DIALOG "Slider", IDD_SLIDERDLG, 11, 11, 200, 240, FS_NOBYTEALIGN |
+         WS_VISIBLE, FCF_SYSMENU | FCF_TITLEBAR
+   BEGIN
+     SLIDER   IDC_SLIDER, 40, 30, 120, 16, SLS_BUTTONSLEFT | WS_VISIBLE
+   END
+ 
+ Related Topics 
+
+ CONTROL Statement 
+ DIALOG Statement 
+ WINDOW Statement 
+ 
+

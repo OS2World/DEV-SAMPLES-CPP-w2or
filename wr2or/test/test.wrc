@@ -1,0 +1,19 @@
+/****************************************************************************
+
+
+test.rc
+
+produced by Borland Resource Workshop
+
+
+*****************************************************************************/
+#include "test.h"
+
+DIALOG_1 DIALOG 6, 15, 207, 111
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "DIALOG_1"
+{
+ EDITTEXT 101, 6, 8, 49, 53
+ COMBOBOX 102, 66, 8, 49, 53, CBS_DROPDOWNLIST | WS_TABSTOP
+ LISTBOX 103, 122, 8, 49, 53, LBS_STANDARD
+}

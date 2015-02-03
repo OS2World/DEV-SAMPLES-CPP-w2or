@@ -1,0 +1,34 @@
+#include <pm.h>
+#include "windows.h"
+#include "alarm.h"
+
+ICON AlarmIconalarm.ico
+MENU AlarmMenu
+BEGIN
+  SUBMENU "~Settings",9000
+  BEGIN
+    MENUITEM "~Display Seconds"	,MENU_DISPLAY_SECONDS
+    MENUITEM "~Supress Seconds"	,MENU_SUPRESS_SECONDS
+    MENUITEM SEPARATOR
+    MENUITEM "~Resume Running"	,MENU_RUN_CLOCK
+    MENUITEM "~Set Alarm"	,MENU_SET_ALARM
+    MENUITEM SEPARATOR
+    MENUITEM "~12 Hour clock"	,MENU_12_HOUR_CLOCK
+    MENUITEM "~24 Hour clock"	,MENU_24_HOUR_CLOCK
+    MENUITEM SEPARATOR
+    MENUITEM "~About AlarmClock ..."	,MENU_ABOUT
+  END
+END
+
+DLGTEMPLATE AboutBox 
+BEGIN
+  DIALOG "About WATCOM AlarmClock", AboutBox, 22,17,144,75, WS_VISIBLE|FS_DLGBORDER, FCF_TITLEBAR|FCF_SYSMENU|FCF_DLGBORDER
+  BEGIN
+    LTEXT "WATCOM Alarm Clock Program", 0xffff, 0,62,144,8,WS_GROUP|DT_WORDBREAK
+    LTEXT "for Windows", 0xffff, 0,53,144,8,WS_GROUP|DT_WORDBREAK
+    LTEXT "Version 1.0", 0xffff, 0,44,144,8,WS_GROUP|DT_WORDBREAK
+    DEFPUSHBUTTON "OK", DID_OK, 53,2,32,14,WS_TABSTOP|WS_GROUP
+    ICON "AlarmIcon", 0xffff, 15,20,40,40,
+    CONTROL "", 0xffff, 15,20,40,40,WC_STATIC, 
+  END
+END

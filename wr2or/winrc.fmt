@@ -1,0 +1,385 @@
+memory-option
+
+memory-option specifies how resources are loaded into memory.
+
+Use the following keywords for memory-option. The resource can be fixed 
+at the same address at which memory-option is loaded, or it can be 
+relocatable. 
+
+Additionally,the resource can be discardable or nondiscardable. 
+MOVEABLE and DISCARDABLE are the default values.
+
+
+Keyword		Value
+---------------------------------------------------
+DISCARDABLE	Can be purged to make space.
+FIXED		Resource stays at same address.
+IMPURE		Resource is modified after loading.
+MOVEABLE	Resource can be relocated in memory.
+NONDISCARDABLE	Must stay in memory.
+PURE		Resource is not modified after it is loaded.
+
+--------------------------------------------------------------------------------------------
+ACCELERATOR
+
+resource-name ACCELERATOR
+BEGIN
+  keystroke, acc-ID, [keystroke-type] [modifier key] [NOINVERT]
+END
+
+Parameters
+
+resource-name	Text identifier or numeric ID for this resource. The name or number must be unique within the 
+ACCELERATOR resource type. Numeric IDs must be positive integers.
+
+keystroke	Value of the character code that activates this accelerator. The field can be either a character in double 
+quotes or a numeric value.
+
+-	If a character in quotes is used, it can be preceded by a carat (^) to indicate that it is a control character (for 
+example "^a" indicates Ctrl-A).
+-	If a numeric value is used, it is either the ASCII value of the accelerator key or the value for a virtual key, 
+depending on the keystroke-type.
+
+
+
+acc-ID	User-assigned integer value that identifies the string. Uniqueness is not required of IDs: Two different key 
+combinations can be used to invoke the same command. 
+	The ID is sent in the wParam of a WM_COMMAND message. The high-order word of the lParam of the 
+WM_COMMAND message is set to 1 to indicate the message resulted from an accelerator key.
+
+keystroke-type	Valid only if the keystroke field contains a numeric value. In such cases, this field indicates whether the 
+keystroke number is an ASCII value or virtual key value as follows:
+
+ASCII	Keystroke field is ASCII value.
+VIRTKEY	Keystroke field is virtual key value.
+
+
+modifier key	Indicates if any modifier keys must be held down while typing the keystroke to activate the accelerator. If this 
+field is missing, no modifier keys are required. 
+	Valid modifier keys are Shift, Alt, and Ctrl. The SHIFT and CTRL modifiers have no effect unless the VIRTKEY 
+keystroke-type is used.
+
+SHIFT	Shift key must be held down.
+CONTROL	Ctrl key must be held down.
+ALT	Alt key must be held down.
+
+
+NOINVERT	Disables highlighting of the menu title of the accelerated menu item when using accelerator keys for actions 
+which have no menu item equivalent. If the NOINVERT field is missing, these menu titles are highlighted.
+
+Remarks
+
+ACCELERATOR is a multiple-line statement that defines keyboard shortcuts for menu items and other program control actions.
+
+The accelerator resource associates one or more accelerator keys with a corresponding accelerator command ID (acc-ID). 
+Although acc-IDs must be numeric, the #define can be used to simplify access by the program.
+
+See Also
+
+#define
+Examples
+
+--------------------------------------------------------------------------------------------
+BITMAP
+
+resource-name BITMAP [load-type] [memory-option] filename
+
+Parameters
+
+resource-name	Text identifier or numeric ID for this resource. The identifier or number must be unique within the BITMAP 
+resource type. Numeric IDs must be positive integers.
+
+load-type	Specifies when the resource is loaded into memory.
+
+memory-option	Specifies how the resource is loaded into memory.
+
+filename	The name of the DOS file containing the bitmap data. A relative or full path name can be used to specify 
+files which are not in the current working directory. The data in the specified file is included in the current 
+project.
+
+Remarks
+
+BITMAP is a binary resource statement that associates a file containing bitmap resource data with a resource name and causes 
+the bitmap data to be included in the current project.
+
+You can write a BITMAP statement with the same syntax as RCDATA.
+
+--------------------------------------------------------------------------------------------
+CURSOR
+
+resource-name CURSOR [load-type] [memory-option] filename
+
+Parameters
+
+resource-name	Text identifier or numeric ID for this resource. The identifier or number must be unique within the CURSOR 
+resource type. Numeric IDs must be positive integers.
+
+load-type	Specifies when the resource is loaded into memory.
+
+memory-option	Specifies how the resource is loaded into memory.
+
+Remarks
+
+CURSOR is a binary resource statement that causes cursor data to be included in the current project.
+
+--------------------------------------------------------------------------------------------
+DIALOG
+
+resource-name DIALOG [load-type] [memory-option] x, y, width, height 
+[STYLE w-style] [CAPTION w-cap]
+[MENU res-name] [CLASS w-class]
+[FONT f-spec] 
+BEGIN
+  dialog-controls
+END
+
+Parameters
+
+resource-name	Text identifier or numeric ID for this resource. The identifier or number must be unique within the DIALOG 
+resource type. Numeric IDs must be positive integers.
+
+load-type	Specifies when the resource is loaded into memory.
+
+memory-option	Specifies how the resource is loaded into memory.
+
+x, y	Horizontal and vertical positions of the upper left corner of the dialog window's client area. These coordinates 
+can either be relative to the window's parent or owner window, or relative to the origin of the screen. This is 
+determined by the window's style setting. Dialog windows are positioned relative to their parent or owner 
+window unless the dialog window style constant DS_ABSALIGN is used.
+
+
+width, height	The size of the client area of the window in dialog units.
+
+STYLE	The window style of the dialog box. The window style specifies whether the box is a pop-up or a child window.
+
+CAPTION	The title of the dialog box. The title appears in the box's caption bar (if it has one). The default caption is 
+empty. 
+
+
+MENU	The dialog box's menu. If no statement is given, the dialog box has no menu.
+
+
+CLASS	The class of the dialog box. If no statement is given, the Windows standard dialog class will be used as the 
+default. 
+
+FONT	The font with which Windows will draw text in the dialog box. The font must have been previously loaded, 
+either from the WIN.INI file or by calling the LoadResource function.
+
+dialog-controls	Definition(s) that specify the content of the dialog windows. This includes static and editable text, various 
+boxes and buttons, controls, and icons. Here are the dialog control statements:
+
+	CHECKBOX
+	COMBOBOX
+	CONTROL
+	CTEXT
+	DEFPUSHBUTTON
+	EDITTEXT
+	GROUPBOX
+	ICON
+	LISTBOX
+	LTEXT
+	PUSHBUTTON
+	RADIOBUTTON
+	RTEXT
+	SCROLLBAR
+
+Remarks
+
+DIALOG is a multiple-line statement that specifies a dialog window.
+
+A dialog window includes the window style, class, size, location, and the controls which will appear in the window. Dialog 
+windows can contain text, check boxes, various buttons, icons, controls, list boxes, and so on.
+
+--------------------------------------------------------------------------------------------
+ICON
+
+For a type 1 icon definition:
+
+resource-name ICON [load-type] [memory-option] filename
+
+
+Parameters
+
+For a type 1 icon definition:
+
+resource-name	Text identifier or numeric ID for this resource. The identifier or number must be unique within the ICON 
+resource type. Numeric IDs must be integers.
+
+load-type	Specifies when the resource is loaded into memory.
+
+memory-option	Specifies how the resource is loaded into memory.
+
+filename	The name of the DOS file containing the icon data. A full path name can be used to specify files which are 
+not in the current working directory. The data in the specified file is included in the current project.
+
+Remarks
+
+There are two types of icon definitions:
+
+type 1 icon	A binary resource statement that associates a file containing icon resource data with a resource name.
+type 2 icon	A DIALOG definition that specifies a static icon control in a dialog box.
+
+
+The type 1 icon definition tells Resource Workshop in which file an icon's data is contained, and gives this icon the specified 
+resource-name. Data from the indicated file is included in the executable file when the application is built.
+
+The type 2 icon definition refers to an icon that was specified with a type 1 definition (or defined in a free-form resource). Type 2 
+icon definitions place static icon controls within a dialog window. This type of ICON definition is only valid within a DIALOG 
+definition.
+
+--------------------------------------------------------------------------------------------
+MENU
+
+resource-name MENU [load-type] [memory-option]
+BEGIN
+  item-definitions
+END
+
+Parameters
+
+resource-name	Text identifier or numeric ID for this resource. The identifier or number must be unique within the MENU 
+resource type. Numeric IDs must be integers.
+
+load-type	Specifies when the resource is loaded into memory.
+
+memory-option	Specifies how the resource is loaded into memory.
+
+item-definitions	Contain one or more MENUITEM or POPUP definitions. The MENUITEM definition specifies individual menu 
+items, and the POPUP definition describes a pop-up menu (also known as a drop-down menu).
+
+Remarks
+
+MENU is a multiple-line statement that defines a menu resource and specifies which menu items appear on this menu.
+
+A MENU definition contains the item definitions, MENUITEM and POPUP.
+
+  MENUITEM (2.x)
+ ฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿
+ Declaration:
+  MENUITEM text, result, [optionlist]
+
+The MENUITEM statement, which is optional, defines a menu item.
+
+ Parameter  ณ Description
+ อออออออออออุอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออ
+ text       ณ Specifies the name of the menu item. This parameter takes an
+	    ณ ASCII string, enclosed in double quotation marks.
+	    ณ
+	    ณ The string can contain the escape characters \t and \a. The \t
+	    ณ character inserts a tab in the string and is used to align
+	    ณ text in columns. Tab characters should be used only in pop-up
+	    ณ menus, not in menu bars. (For information on pop-up menus, see
+	    ณ the POPUP statement.) The \a character aligns all text that
+	    ณ follows it flush right to the menu bar or pop-up menu.
+	    ณ
+	    ณ To insert a double quotation mark in the string, use two
+	    ณ double quotation marks.
+	    ณ
+	    ณ To add a mnemonic to the text string, place the ampersand (&)
+	    ณ ahead of the letter that will be the mnemonic. This will cause
+	    ณ the letter to appear underlined in the control and to function
+	    ณ as the mnemonic. To use the ampersand as a character in a
+	    ณ string, insert two ampersands (&&).
+	    ณ
+ result     ณ Specifies the result generated when the user selects the menu
+	    ณ item. This parameter takes an integer value. Menu-item results
+	    ณ are always integers; when the user clicks the menu-item name,
+	    ณ the result is sent to the window that owns the menu.
+	    ณ
+ optionlist ณ Specifies the appearance of the menu item. This optional
+	    ณ parameter takes one or more predefined menu options, separated
+	    ณ by commas or spaces. The menu options are as follows:
+	    ณ
+	    ณ Option       ณ Description
+	    ณ              ณ
+	    ณ CHECKED      ณ Item has a check mark next to it.
+	    ณ              ณ
+	    ณ GRAYED       ณ Item name is initially inactive and appears on
+	    ณ              ณ the menu in gray or a lightened shade of the
+	    ณ              ณ menu-text color.
+	    ณ              ณ
+	    ณ HELP         ณ Identifies a help item.
+	    ณ              ณ
+	    ณ INACTIVE     ณ Item name is displayed but it cannot be
+	    ณ              ณ selected.
+	    ณ              ณ
+	    ณ MENUBARBREAK ณ Same as MF_MENUBREAK except that for pop-up
+	    ณ              ณ menus, it separates the new column from the old
+	    ณ              ณ column with a vertical line.
+	    ณ              ณ
+	    ณ MENUBREAK    ณ Places the menu item on a new line for static
+	    ณ              ณ menu-bar items. For pop-up menus, it places the
+	    ณ              ณ menu item in a new column with no dividing line
+	    ณ              ณ between the columns.
+	    ณ              ณ
+	    ณ              ณ The INACTIVE and GRAYED options cannot be used
+	    ณ              ณ together.
+
+ Example:
+The following example demonstrates the usage of the MENUITEM statement:
+
+
+ MENUITEM  "&Alpha", 1, CHECKED, GRAYED
+ MENUITEM  "&Beta", 2
+
+
+
+--------------------------------------------------------------------------------------------
+RCDATA
+
+resource-name RCDATA [load-type] [memory-option]
+BEGIN
+  resource-data
+END
+
+Parameters
+
+resource-name	The text identifier or numeric ID for this resource. The identifier or number must be unique. Numeric IDs 
+must be integers.
+
+load-type	Specifies when the resource is loaded into memory.
+
+memory-option	Specifies how the resource is loaded into memory.
+
+resource-data	One or more lines of data in standard C language format. Data can consist of any mix of numeric values 
+and strings. Numeric values can be represented in hex, octal, or decimal. Strings are placed inside double 
+quotation marks. String values are not automatically null terminated. To terminate a string with a null 
+character, simply include a \0 at the end of the string.
+
+Remarks
+
+RCDATA is a multiple-line statement that lets the user include any type of data directly in an .RC file.
+
+The resource data is associated with the specified resource name, and is included in the executable file for access at run time.
+
+--------------------------------------------------------------------------------------------
+STRINGTABLE
+
+STRINGTABLE [load-type] [memory-option]
+BEGIN
+  string-ID, string
+END
+
+Parameters
+
+load-type	Specifies when the resource is loaded into memory.
+
+memory-option	Specifies how the resource is loaded into memory.
+
+string-ID	A user-assigned integer value that identifies the string. Each string ID must be unique. The string ID is used 
+at run time by the LoadString function to determine which string is being requested by the program.
+
+string	An ASCII string in standard C language format.
+
+Remarks
+
+STRINGTABLE is a multiple-line statement that specifies null-terminated ASCII strings that can be accessed by the program.
+
+Each string is assigned a unique unsigned short integer string ID. Strings are read in for access at run time by calling the 
+LoadString function with the desired string ID.
+
+The string table mechanism is a convenient method to keep text strings separate from code for easy update and possible 
+translation into foreign languages.
+
+Although string IDs must be numeric, the #define preprocessor directive can be used to simplify access by the program. (See the 
+second example.)

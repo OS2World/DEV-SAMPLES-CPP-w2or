@@ -1,0 +1,21 @@
+#include <pm.h>
+/****************************************************************************
+
+
+test.rc
+
+produced by Borland Resource Workshop
+
+
+*****************************************************************************/
+#include "test.h"
+
+DLGTEMPLATE DIALOG_1 
+BEGIN
+  DIALOG "DIALOG_1", DIALOG_1, 6,15,207,111, WS_VISIBLE|FS_DLGBORDER, FCF_TITLEBAR|FCF_SYSMENU|FCF_DLGBORDER
+  BEGIN
+    EDITTEXT "", 101, 6,50,49,53,WS_TABSTOP|ES_LEFT|ES_MARGIN
+    COMBOBOX "", 102, 66,50,49,53,WS_TABSTOP|CBS_DROPDOWNLIST
+    LISTBOX 103,122,50,49,53,
+  END
+END

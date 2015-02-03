@@ -1,0 +1,8 @@
+@echo off
+md source
+copy *.cpp source
+copy *.c source
+copy *.h source
+arj a -jm -t1g.c.cpp.h.txt wr2or.arj wr2or.exe wr2or.txt source\*.*
+del source\*.*
+rd source
